@@ -28,19 +28,19 @@ public class Event {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "start", nullable = false)
+    @Column(name = "event_start")
     private LocalDateTime start;
 
-    @Column(name = "end", nullable = false)
+    @Column(name = "event_end")
     private LocalDateTime end;
 
     @Column(name = "venue", nullable = false)
     private String venue;
 
-    @Column(name = "sales_start", nullable = false)
+    @Column(name = "sales_start")
     private LocalDateTime salesStart;
 
-    @Column(name = "sales_end", nullable = false)
+    @Column(name = "sales_end")
     private LocalDateTime salesEnd;
 
     @Column(name = "status", nullable = false)

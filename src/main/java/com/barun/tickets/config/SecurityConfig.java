@@ -17,20 +17,20 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(
             HttpSecurity http,
             UserProvisioningFilter userProvisioningFilter) throws Exception {
-
         http
                 .authorizeHttpRequests(authorize ->
+                        // Catch all rule
                         authorize.anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(
-                        Customizer.withDefaults()
-                ))
+                                Customizer.withDefaults()
+                        ))
                 .addFilterAfter(userProvisioningFilter, BearerTokenAuthenticationFilter.class);
 
         return http.build();
-
     }
+
 }

@@ -25,7 +25,7 @@ public class QrCode {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private QeCodeStatusEnum status;
+    private QrCodeStatusEnum status;
 
     @Column(name = "value", nullable = false)
     private String value;

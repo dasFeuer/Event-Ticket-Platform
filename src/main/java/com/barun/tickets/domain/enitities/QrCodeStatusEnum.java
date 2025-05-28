@@ -1,5 +1,5 @@
 package com.barun.tickets.domain.enitities;
 
-public enum QeCodeStatusEnum {
+public enum QrCodeStatusEnum {
     ACTIVE, EXPIRED
 }

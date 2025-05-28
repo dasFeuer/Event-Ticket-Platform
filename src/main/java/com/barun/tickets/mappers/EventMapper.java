@@ -2,10 +2,9 @@ package com.barun.tickets.mappers;
 
 import com.barun.tickets.domain.CreateEventRequest;
 import com.barun.tickets.domain.CreateTicketTypeRequest;
-import com.barun.tickets.domain.dtos.CreateEventRequestDto;
-import com.barun.tickets.domain.dtos.CreateEventResponseDto;
-import com.barun.tickets.domain.dtos.CreateTicketTypeRequestDto;
+import com.barun.tickets.domain.dtos.*;
 import com.barun.tickets.domain.enitities.Event;
+import com.barun.tickets.domain.enitities.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -17,4 +16,12 @@ public interface EventMapper {
     CreateEventRequest fromDto(CreateEventRequestDto dto);
 
     CreateEventResponseDto toDto(Event event);
+
+    ListEventTicketTypeResponseDto toDto(TicketType ticketType);
+
+    ListEventResponseDto toListEventResponseDto(Event event);
+
+    GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
+
+    GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
 }

@@ -1,10 +1,8 @@
 package com.barun.tickets.controllers;
 
 import com.barun.tickets.domain.CreateEventRequest;
-import com.barun.tickets.domain.dtos.CreateEventRequestDto;
-import com.barun.tickets.domain.dtos.CreateEventResponseDto;
-import com.barun.tickets.domain.dtos.GetEventDetailsResponseDto;
-import com.barun.tickets.domain.dtos.ListEventResponseDto;
+import com.barun.tickets.domain.UpdateEventRequest;
+import com.barun.tickets.domain.dtos.*;
 import com.barun.tickets.domain.enitities.Event;
 import com.barun.tickets.mappers.EventMapper;
 import com.barun.tickets.services.EventService;
@@ -67,5 +65,21 @@ public class EventController {
                 .map(eventMapper::toGetEventDetailsResponseDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto
+    ){
+        UpdateEventRequest updateEventRequest = eventMapper.fromDto(updateEventRequestDto);
+        UUID userId = parseUserId(jwt);
+        Event updatedEvent = eventService.updateEventForOrganizer(
+                userId, eventId, updateEventRequest
+        );
+
+        UpdateEventResponseDto updateEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+        return ResponseEntity.ok(updateEventResponseDto);
     }
 }

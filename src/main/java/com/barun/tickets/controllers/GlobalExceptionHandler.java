@@ -1,10 +1,7 @@
 package com.barun.tickets.controllers;
 
 import com.barun.tickets.domain.dtos.ErrorDto;
-import com.barun.tickets.exceptions.EventNotFoundException;
-import com.barun.tickets.exceptions.EventUpdateException;
-import com.barun.tickets.exceptions.TicketTypeNotFoundException;
-import com.barun.tickets.exceptions.UserNotFoundException;
+import com.barun.tickets.exceptions.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +23,30 @@ public class GlobalExceptionHandler {
         log.error("Caught EventUpdateException", ex);
         ErrorDto errorDto = new ErrorDto();
         errorDto.setError("Unable to update event");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeGenerationException(QrCodeGenerationException ex) {
+        log.error("Caught QrCodeGenerationException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Unable to generate QR code");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(QrCodeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeNotFoundException(QrCodeNotFoundException ex) {
+        log.error("Caught QrCodeNotFoundException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("QR code not found");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(TicketSoldOutException.class)
+    public ResponseEntity<ErrorDto> handleTicketSoldOutException(TicketSoldOutException ex) {
+        log.error("Caught TicketSoldOutException", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Tickets are sold out for this ticket type");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 
